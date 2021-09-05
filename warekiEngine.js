@@ -41,7 +41,8 @@ const convWareki = (node) => {
 				//onsole.log(`Check ext: ${sHead}-${sNum}-${sExt}-${sCheck}-`);
 
 				const srSeireki = '^\\s*[（(<](西暦)?\\d{4}年?';
-				if(null !== sCheck.match(new RegExp(srSeireki, 'i'))){
+				const rSeireki = new RegExp(srSeireki);
+				if(rSeireki.test(sCheck)){
 					return `${sHead}${sNum}${sExt}`; // no changed
 				}
 			}
