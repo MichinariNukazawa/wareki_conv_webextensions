@@ -13,7 +13,7 @@ Page replace: Mozilla Public License2.0
 - 本アドオンのON/OFF
 - その他の年号(範囲が曖昧なものを含む)対応
 - 全角数字・漢数字の対応
-- すでに西暦が記載されている場合に重複表示しない
+- すでに西暦が記載されている場合に重複表示しない (一部対応済み)
 
 # Contact
 mail: [michinari.nukazawa@gmail.com][mailto]  

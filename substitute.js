@@ -7,8 +7,7 @@ function replaceText (node) {
 			return;
 		}
 
-		let content = node.textContent;
-		content = convWareki(content);
+		const content = convWareki(node);
 		node.textContent = content;
 	}
 	else {
