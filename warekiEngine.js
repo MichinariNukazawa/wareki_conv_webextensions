@@ -74,7 +74,12 @@ const convWareki = (node) => {
 				}
 			}
 			const seireki = wareki.conv(num);
-			return `${sHead}${sNum}<${seireki}>${sExt}`;
+			let sSeireki = `${seireki}`;
+			if(0 >= seireki){
+				// https://ja.wikipedia.org/wiki/西暦#0と負の西暦
+				sSeireki = `BCE${Math.abs(seireki) + 1}`;
+			}
+			return `${sHead}${sNum}<${sSeireki}>${sExt}`;
 		});
 	}
 
