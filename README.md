@@ -1,13 +1,13 @@
 Daisy WarekiConv - converted from Japanese era WebExtensions
 ----
-In page convert with Japanese calendar to Western calendar.
-ページ内の和暦(昭和・平成など)を西暦に自動変換します。
-変換した西暦は和暦の後ろに挿入して表示されます。
+In page convert with Japanese calendar to Western calendar.  
+ページ内の和暦(昭和・平成など)を西暦に自動変換します。  
+変換した西暦は和暦の後ろに挿入して表示されます。  
 
-<img src="document/20210905_example.png" width="500">
+<img src="document/20210905_example.png" width="500">  
 
 # License
-Page replace: Mozilla Public License2.0
+Page replace: Mozilla Public License2.0  
 
 # TODO
 - 本アドオンのON/OFF
