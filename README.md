@@ -9,10 +9,14 @@ In page convert with Japanese calendar to Western calendar.
 # License
 Page replace: Mozilla Public License2.0  
 
+# 主な機能
+- 現在対応している元号： 明治, 大正, 昭和, 平成, 令和, 皇紀
+- 全角数字の元号も変換
+
 # TODO
 - 本アドオンのON/OFF
-- その他の年号(範囲が曖昧なものを含む)対応
-- 全角数字・漢数字の対応
+- その他の元号(範囲が曖昧なものを含む)対応
+- 漢数字の対応
 - すでに西暦が記載されている場合に重複表示しない (一部対応済み)
 
 # Contact
