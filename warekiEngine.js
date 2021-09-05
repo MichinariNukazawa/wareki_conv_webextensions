@@ -21,22 +21,22 @@ const convWareki = (content) => {
 	for (let [word, wareki] of warekiMap) {
 		const regex = regexs.get(word);
 		content = content.replace(regex, (match, sNum) => {
-				if('' === sNum){
-					return match;
+			if('' === sNum){
+				return match;
+			}
+			let num = 0;
+			if('元年' === sNum){
+				num = 1;
+			}else{
+				num = parseInt(sNum, 10);
+				if(isNaN(num)){
+					// Warn: can not convert.
+					return match + `<?'${sNum}'>`;
 				}
-				let num = 0;
-				if('元年' === sNum){
-					num = 1;
-				}else{
-					num = parseInt(sNum, 10);
-					if(isNaN(num)){
-						// Warn: can not convert.
-						return match + `<?'${sNum}'>`;
-					}
-				}
-				const seireki = wareki.conv(num);
-				return match + `<${seireki}>`;
-			});
+			}
+			const seireki = wareki.conv(num);
+			return match + `<${seireki}>`;
+		});
 	}
 
 	return content;
