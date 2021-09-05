@@ -14,7 +14,7 @@ const warekiMap = dictionary;
 
 let regexs = new Map();
 for (let word of warekiMap.keys()) {
-	regexs.set(word, new RegExp(`(${word}\s*)(元年|\\d+年?|[${zenkakuNumChars}]+年?)(.{0,10})?`, 'gi'));
+	regexs.set(word, new RegExp(`(${word}\s*)(元年|\\d+年?|[${wideNumAllChars}]+年?)(.{0,10})?`, 'gi'));
 }
 
 const convWareki = (node) => {
@@ -50,8 +50,18 @@ const convWareki = (node) => {
 			let num = 0;
 			if('元年' === sNum){
 				num = 1;
-			}else if(-1 !== zenkakuNumChars.indexOf(sNum[0])){
+			}else if(-1 !== zenkakuArabicNumChars.indexOf(sNum[0])){
 				num = convZenkakuStr2Int(sNum);
+				if(isNaN(num)){
+					// Warn: can not convert.
+					return `${sHead}<?'${sNum}'>${sExt}`;
+				}
+			}else if(-1 !== kanSuuziAllChars.indexOf(sNum[0])){
+				if(rKanSuuziKeta.test(sNum)){
+					num = convKanSuuziWithKetaStr2Int(sNum);
+				}else{
+					num = convKanSuuziStr2Int(sNum);
+				}
 				if(isNaN(num)){
 					// Warn: can not convert.
 					return `${sHead}<?'${sNum}'>${sExt}`;
