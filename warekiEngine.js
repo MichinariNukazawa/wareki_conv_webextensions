@@ -8,6 +8,7 @@ dictionary.set('大正', {'conv':(num)=>{return num + 11 + 1900;}});
 dictionary.set('昭和', {'conv':(num)=>{return num + 25 + 1900;}});
 dictionary.set('平成', {'conv':(num)=>{return num - 12 + 2000;}});
 dictionary.set('令和', {'conv':(num)=>{return num + 18 + 2000;}});
+dictionary.set('皇紀', {'conv':(num)=>{return num - 660;}});
 
 const warekiMap = dictionary;
 
