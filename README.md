@@ -6,8 +6,13 @@ In page convert with Japanese calendar to Western calendar.
 
 <img src="document/20210910_example.png" width="500">  
 
+# Get lina\_dicto for webextension
+[Firefox Add-ons](https://addons.mozilla.org/ja/firefox/addon/daisy-warekiconv/)  
+[Chrome WebStore](https://chrome.google.com/webstore/detail/daisy-warekiconv/ckcedomogohijbfmcdnoaoeeoonabnbd)  
+
 # License
 Page replace: Mozilla Public License2.0  
+Other: Clause-2 BSD License  
 
 # 主な機能
 - 現在対応している元号： 明治, 大正, 昭和, 平成, 令和, 皇紀
