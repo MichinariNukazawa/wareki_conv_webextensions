@@ -114,6 +114,15 @@ function convKanSuuziWithKetaStr2Int(sKanSuuzi)
 			// 変換を打ち切って結果を返す
 			break;
 		}else{
+			if(10 <= res){
+				// 20などはそのまま加算(20百で2000、などしていない想定)
+				val += res;
+				continue;
+			}
+			if(isStackedNum){
+				// Warn:数字が連続することはありえない
+				break;
+			}
 			num = res;
 			isStackedNum = true;
 		}
