@@ -15,10 +15,10 @@ const warekiMap = dictionary;
 const rsRekiStrNum = `元年|\\d+年?|[${wideNumAllChars}]+年?`;
 let regexs = new Map();
 for (let word of warekiMap.keys()) {
-	regexs.set(word, new RegExp(`(${word}\s*)(${rsRekiStrNum})(.{0,10})?`, 'gi'));
+	regexs.set(word, new RegExp(`(${word}\s*)(${rsRekiStrNum})`, 'gi'));
 }
 
-function genPrintString(wareki, sHead, sNum, sExt){
+function genPrintString(wareki, sHead, sNum){
 	let num = 0;
 	if('元年' === sNum){
 		num = 1;
@@ -26,7 +26,7 @@ function genPrintString(wareki, sHead, sNum, sExt){
 		num = convZenkakuStr2Int(sNum);
 		if(isNaN(num)){
 			// Warn: can not convert.
-			return `${sHead}<?'${sNum}'>${sExt}`;
+			return `${sHead}<?'${sNum}'>`;
 		}
 	}else if(-1 !== kanSuuziAllChars.indexOf(sNum[0])){
 		if(rKanSuuziKeta.test(sNum)){
@@ -36,13 +36,13 @@ function genPrintString(wareki, sHead, sNum, sExt){
 		}
 		if(isNaN(num)){
 			// Warn: can not convert.
-			return `${sHead}<?'${sNum}'>${sExt}`;
+			return `${sHead}<?'${sNum}'>`;
 		}
 	}else{
 		num = parseInt(sNum, 10);
 		if(isNaN(num)){
 			// Warn: can not convert.
-			return `${sHead}<?'${sNum}'>${sExt}`;
+			return `${sHead}<?'${sNum}'>`;
 		}
 	}
 	const seireki = wareki.conv(num);
@@ -51,7 +51,7 @@ function genPrintString(wareki, sHead, sNum, sExt){
 		// https://ja.wikipedia.org/wiki/西暦#0と負の西暦
 		sSeireki = `BCE${Math.abs(seireki) + 1}`;
 	}
-	return `${sHead}${sNum}<${sSeireki}>${sExt}`;
+	return `${sHead}${sNum}<${sSeireki}>`;
 }
 
 function getLastPrevText(node)
@@ -87,34 +87,31 @@ const convWareki = (node) => {
 
 		// node内の和暦に対して変換を行う
 		const regex = regexs.get(word);
-		content = content.replace(regex, (match, sHead, sNum, sExt) => {
+		content = content.replace(regex, (match, sHead, sNum, offset, str) => {
+			const sExt = str.slice(offset + sHead.length + sNum.length);
 			// TODO can not able check splited text other node(prev node).
 			// ex:`皇紀2587年（西暦1927年・昭和2年<1927>）`
 
 			// skip if already exist Western calender
 			// ex:`皇紀2601年（<a>1941年</a>`
 			// 末尾に西暦を検出した場合に、変換をキャンセルする
-			if(undefined !== sExt){
-				// 後文字列がnextNodeに続いていそうであれば連結して判定
-				let nextText = '';
-				if(10 > sExt.length){
-					const nextNode = node.nextSibling;
-					if(null !== nextNode && null !== nextNode.textContent){
-						nextText = nextNode.textContent;
-					}
-				}
-				const sCheck = sExt + nextText;
-				//onsole.log(`Check ext: ${sHead}-${sNum}-${sExt}-${sCheck}-`);
-
-				const srSeireki = '^\\s*[（(<](西暦)?\\d{4}年?';
-				const rSeireki = new RegExp(srSeireki);
-				if(rSeireki.test(sCheck)){
-					return `${sHead}${sNum}${sExt}`; // no changed
+			let nextText = '';
+			if(sExt.length < 10){ // 後文字列が少なければ、nextNodeも判定用に連結
+				const nextNode = node.nextSibling;
+				if(null !== nextNode && null !== nextNode.textContent){
+					nextText = nextNode.textContent;
 				}
 			}
+			const sCheck = sExt + nextText;
+			//onsole.log(`Check ext: ${sHead}-${sNum}-${sExt}-${sCheck}-`);
 
-			sExt = (sExt)? sExt : '';
-			return genPrintString(wareki, sHead, sNum, sExt);
+			const srSeireki = '^\\s*[（(<](西暦)?\\d{4}年?';
+			const rSeireki = new RegExp(srSeireki);
+			if(rSeireki.test(sCheck)){
+				return `${sHead}${sNum}`; // no changed
+			}
+
+			return genPrintString(wareki, sHead, sNum);
 		});
 	}
 
