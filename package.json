@@ -1,0 +1,26 @@
+{
+  "name": "wareki_conv_webextensions",
+  "version": "1.0.0",
+  "scripts": {
+    "watch": "node scripts/build.js --watch",
+    "archive-chrome": "node scripts/archive.js dist.chrome/ wareki_conv_webextensions_chrome.zip",
+    "archive-firefox": "node scripts/archive.js dist.firefox/ wareki_conv_webextensions_firefox.zip",
+    "archive-src": "git archive HEAD --output=wareki_conv_webextensions_src.zip",
+    "release": "node scripts/build.js && npm run archive-chrome && npm run archive-firefox && npm run archive-src",
+    "start:firefox": "TMPDIR=tmp/ web-ext run --source-dir dist.firefox/ --arg=\"--new-tab=about:debugging#/runtime/this-firefox\" --arg=\"--new-tab=https://www.mext.go.jp/\"",
+    "start:chromium": "chromium --temp-profile --load-extension=dist.chrome/ https://www.mext.go.jp/",
+    "test": "mocha",
+    "testtotest": "mocha test/mocha.js"
+  },
+  "jest": {
+    "verbose": true
+  },
+  "devDependencies": {
+    "archiver": "^5.3.1",
+    "chokidar": "^3.5.3",
+    "fs-extra": "^11.1.1",
+    "mocha": "^10.4.0",
+    "power-assert": "^1.6.1",
+    "web-ext": "^7.11.0"
+  }
+}
